@@ -1,12 +1,28 @@
 import { useNavigate } from 'react-router-dom'
 import { RadarChart, Radar, PolarGrid, PolarAngleAxis, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { useEffect } from 'react'
 
 export default function Report() {
   const navigate = useNavigate()
   const name = localStorage.getItem('studentName')
+  const roll = localStorage.getItem('rollNumber')
   const marks = JSON.parse(localStorage.getItem('marks') || '{}')
   const attendance = localStorage.getItem('attendance')
   const skills = JSON.parse(localStorage.getItem('skills') || '{}')
+
+  // Save student data for teacher
+  useEffect(() => {
+    const existingStudents = JSON.parse(localStorage.getItem('allStudents') || '[]')
+    const studentData = { name, roll, marks, attendance, skills }
+    const alreadyExists = existingStudents.find(s => s.roll === roll)
+    if (!alreadyExists) {
+      existingStudents.push(studentData)
+      localStorage.setItem('allStudents', JSON.stringify(existingStudents))
+    } else {
+      const updated = existingStudents.map(s => s.roll === roll ? studentData : s)
+      localStorage.setItem('allStudents', JSON.stringify(updated))
+    }
+  }, [])
 
   const subjectData = [
     { subject: 'Maths', score: parseInt(marks.maths || 0), benchmark: 75 },
@@ -17,7 +33,7 @@ export default function Report() {
   ]
 
   const skillData = [
-    { skill: 'Problem\nSolving', value: (skills.problemSolving || 0) * 20 },
+    { skill: 'Problem Solving', value: (skills.problemSolving || 0) * 20 },
     { skill: 'Communication', value: (skills.communication || 0) * 20 },
     { skill: 'Teamwork', value: (skills.teamwork || 0) * 20 },
     { skill: 'Coding', value: (skills.coding || 0) * 20 },
@@ -69,6 +85,7 @@ export default function Report() {
         <div style={{background:'linear-gradient(135deg,#667eea,#764ba2)', borderRadius:'20px', padding:'30px', color:'white', marginBottom:'25px', textAlign:'center'}}>
           <h1>📊 Skill Gap Analysis Report</h1>
           <p style={{fontSize:'18px'}}>Student: <strong>{name}</strong></p>
+          <p>Roll Number: {roll}</p>
           <div style={{background:'rgba(255,255,255,0.2)', borderRadius:'15px', padding:'20px', marginTop:'15px'}}>
             <div style={{fontSize:'60px', fontWeight:'bold', color:'white'}}>{grade}</div>
             <div style={{fontSize:'24px'}}>{label}</div>
@@ -111,7 +128,7 @@ export default function Report() {
               width:`${attendance}%`, height:'100%',
               background: parseInt(attendance) >= 75 ? '#22c55e' : '#ef4444',
               borderRadius:'10px', display:'flex', alignItems:'center',
-              paddingLeft:'10px', color:'white', fontWeight:'bold', transition:'width 1s'
+              paddingLeft:'10px', color:'white', fontWeight:'bold'
             }}>
               {attendance}%
             </div>
@@ -119,6 +136,33 @@ export default function Report() {
           <p style={{color: parseInt(attendance) >= 75 ? '#22c55e' : '#ef4444', marginTop:'10px', fontWeight:'bold'}}>
             {parseInt(attendance) >= 75 ? '✅ Good attendance!' : '⚠️ Attendance below 75% — needs improvement!'}
           </p>
+        </div>
+
+        {/* Peer Comparison */}
+        <div style={{background:'white', borderRadius:'15px', padding:'25px', marginBottom:'20px', boxShadow:'0 4px 15px rgba(0,0,0,0.1)'}}>
+          <h2 style={{color:'#333', marginBottom:'20px'}}>👥 Peer Comparison</h2>
+          {(() => {
+            const allStudents = JSON.parse(localStorage.getItem('allStudents') || '[]')
+            if (allStudents.length <= 1) {
+              return <p style={{color:'#999', textAlign:'center', padding:'20px'}}>Peer comparison available once more students complete assessments!</p>
+            }
+            const peerData = subjectData.map(s => {
+              const classAvg = Math.round(allStudents.reduce((sum, st) => sum + parseInt(st.marks[s.subject.toLowerCase()] || 0), 0) / allStudents.length)
+              return { subject: s.subject, yourScore: s.score, classAverage: classAvg }
+            })
+            return (
+              <ResponsiveContainer width="100%" height={250}>
+                <BarChart data={peerData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="subject" />
+                  <YAxis domain={[0, 100]} />
+                  <Tooltip />
+                  <Bar dataKey="yourScore" fill="#667eea" name="Your Score" radius={[5,5,0,0]} />
+                  <Bar dataKey="classAverage" fill="#38ef7d" name="Class Average" radius={[5,5,0,0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            )
+          })()}
         </div>
 
         {/* Recommendations */}

@@ -3,6 +3,8 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import SkillInput from './pages/SkillInput'
 import Report from './pages/Report'
+import TeacherLogin from './pages/TeacherLogin'
+import TeacherDashboard from './pages/TeacherDashboard'
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/input" element={<SkillInput />} />
         <Route path="/report" element={<Report />} />
+        <Route path="/teacher" element={<TeacherLogin />} />
+        <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
       </Routes>
     </BrowserRouter>
   )

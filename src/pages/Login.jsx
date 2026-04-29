@@ -38,6 +38,11 @@ export default function Login() {
           style={{width:'100%', padding:'12px', background:'linear-gradient(135deg,#667eea,#764ba2)', color:'white', border:'none', borderRadius:'8px', fontSize:'16px', cursor:'pointer', fontWeight:'bold'}}>
           Login →
         </button>
+        <button
+  onClick={() => navigate('/teacher')}
+  style={{width:'100%', padding:'12px', background:'linear-gradient(135deg,#11998e,#38ef7d)', color:'white', border:'none', borderRadius:'8px', fontSize:'14px', cursor:'pointer', fontWeight:'bold', marginTop:'10px'}}>
+  👩‍🏫 Teacher Login
+</button>
       </div>
     </div>
   )
