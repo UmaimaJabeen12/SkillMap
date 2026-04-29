@@ -14,10 +14,15 @@ export default function Dashboard() {
     const skills = JSON.parse(localStorage.getItem('skills') || '{}')
     const newAlerts = []
 
-    if (attendance && parseInt(attendance) < 75) {
+    if (!attendance || Object.keys(marks).length === 0) {
+      setAlerts([])
+      return
+    }
+
+    if (parseInt(attendance) < 75) {
       newAlerts.push({ type: 'danger', message: '🚨 Your attendance is below 75%! You may be detained!' })
     }
-    if (attendance && parseInt(attendance) >= 75 && parseInt(attendance) < 85) {
+    if (parseInt(attendance) >= 75 && parseInt(attendance) < 85) {
       newAlerts.push({ type: 'warning', message: '⚠️ Your attendance is dropping! Try to attend more classes.' })
     }
     if (marks.maths && parseInt(marks.maths) < 50) {
@@ -35,7 +40,7 @@ export default function Dashboard() {
     if (skills.problemSolving && parseInt(skills.problemSolving) < 3) {
       newAlerts.push({ type: 'warning', message: '⚠️ Work on your Problem Solving skills — very important for placements!' })
     }
-    if (newAlerts.length === 0 && attendance) {
+    if (newAlerts.length === 0) {
       newAlerts.push({ type: 'success', message: '🌟 Great job! You are performing well. Keep it up!' })
     }
     setAlerts(newAlerts)
