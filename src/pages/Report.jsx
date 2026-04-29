@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { RadarChart, Radar, PolarGrid, PolarAngleAxis, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { useEffect } from 'react'
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
 
 export default function Report() {
   const navigate = useNavigate()
@@ -76,10 +78,21 @@ export default function Report() {
   }
 
   const { grade, color, label } = getGrade(overallScore)
+  const downloadPDF = () => {
+  const input = document.getElementById('report-content')
+  html2canvas(input, { scale: 2 }).then(canvas => {
+    const imgData = canvas.toDataURL('image/png')
+    const pdf = new jsPDF('p', 'mm', 'a4')
+    const pdfWidth = pdf.internal.pageSize.getWidth()
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight)
+    pdf.save(`SkillMap_Report_${name}.pdf`)
+  })
+}
 
   return (
     <div style={{minHeight:'100vh', background:'#f0f2f5', padding:'30px'}}>
-      <div style={{maxWidth:'800px', margin:'0 auto'}}>
+      <div id="report-content" style={{maxWidth:'800px', margin:'0 auto'}}>
 
         {/* Header */}
         <div style={{background:'linear-gradient(135deg,#667eea,#764ba2)', borderRadius:'20px', padding:'30px', color:'white', marginBottom:'25px', textAlign:'center'}}>
@@ -175,19 +188,22 @@ export default function Report() {
           ))}
         </div>
 
-        {/* Buttons */}
-        <div style={{display:'flex', gap:'15px'}}>
-          <button onClick={() => navigate('/input')}
-            style={{flex:1, padding:'15px', background:'#667eea', color:'white', border:'none', borderRadius:'10px', fontSize:'16px', cursor:'pointer', fontWeight:'bold'}}>
-            ← Retake Assessment
-          </button>
-          <button onClick={() => navigate('/dashboard')}
-            style={{flex:1, padding:'15px', background:'#764ba2', color:'white', border:'none', borderRadius:'10px', fontSize:'16px', cursor:'pointer', fontWeight:'bold'}}>
-            🏠 Dashboard
-          </button>
-        </div>
-
-      </div>
+       {/* Buttons */}
+<div style={{display:'flex', gap:'15px'}}>
+  <button onClick={() => navigate('/input')}
+    style={{flex:1, padding:'15px', background:'#667eea', color:'white', border:'none', borderRadius:'10px', fontSize:'16px', cursor:'pointer', fontWeight:'bold'}}>
+    ← Retake Assessment
+  </button>
+  <button onClick={() => navigate('/dashboard')}
+    style={{flex:1, padding:'15px', background:'#764ba2', color:'white', border:'none', borderRadius:'10px', fontSize:'16px', cursor:'pointer', fontWeight:'bold'}}>
+    🏠 Dashboard
+  </button>
+  <button onClick={downloadPDF}
+    style={{flex:1, padding:'15px', background:'#22c55e', color:'white', border:'none', borderRadius:'10px', fontSize:'16px', cursor:'pointer', fontWeight:'bold'}}>
+    📥 Download PDF
+  </button>
+</div>
+</div>
     </div>
   )
 }
