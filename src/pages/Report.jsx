@@ -178,6 +178,122 @@ export default function Report() {
           })()}
         </div>
 
+{/* Badges */}
+<div style={{background:'white', borderRadius:'15px', padding:'25px', marginBottom:'20px', boxShadow:'0 4px 15px rgba(0,0,0,0.1)'}}>
+  <h2 style={{color:'#333', marginBottom:'20px'}}>🏆 Your Achievements</h2>
+  <div style={{display:'flex', flexWrap:'wrap', gap:'15px'}}>
+    
+    {overallScore >= 85 && (
+      <div style={{background:'linear-gradient(135deg,#f59e0b,#ef4444)', borderRadius:'15px', padding:'15px 20px', color:'white', textAlign:'center', minWidth:'120px'}}>
+        <div style={{fontSize:'30px'}}>🏆</div>
+        <div style={{fontWeight:'bold', fontSize:'13px'}}>Top Performer</div>
+      </div>
+    )}
+
+    {parseInt(attendance) >= 90 && (
+      <div style={{background:'linear-gradient(135deg,#22c55e,#16a34a)', borderRadius:'15px', padding:'15px 20px', color:'white', textAlign:'center', minWidth:'120px'}}>
+        <div style={{fontSize:'30px'}}>📅</div>
+        <div style={{fontWeight:'bold', fontSize:'13px'}}>Perfect Attendance</div>
+      </div>
+    )}
+
+    {skills.coding >= 4 && (
+      <div style={{background:'linear-gradient(135deg,#667eea,#764ba2)', borderRadius:'15px', padding:'15px 20px', color:'white', textAlign:'center', minWidth:'120px'}}>
+        <div style={{fontSize:'30px'}}>💻</div>
+        <div style={{fontWeight:'bold', fontSize:'13px'}}>Coding Star</div>
+      </div>
+    )}
+
+    {skills.problemSolving >= 4 && (
+      <div style={{background:'linear-gradient(135deg,#11998e,#38ef7d)', borderRadius:'15px', padding:'15px 20px', color:'white', textAlign:'center', minWidth:'120px'}}>
+        <div style={{fontSize:'30px'}}>🧠</div>
+        <div style={{fontWeight:'bold', fontSize:'13px'}}>Problem Solver</div>
+      </div>
+    )}
+
+    {skills.teamwork >= 4 && (
+      <div style={{background:'linear-gradient(135deg,#f093fb,#f5576c)', borderRadius:'15px', padding:'15px 20px', color:'white', textAlign:'center', minWidth:'120px'}}>
+        <div style={{fontSize:'30px'}}>🤝</div>
+        <div style={{fontWeight:'bold', fontSize:'13px'}}>Team Player</div>
+      </div>
+    )}
+
+    {parseInt(marks.programming) >= 85 && (
+      <div style={{background:'linear-gradient(135deg,#4facfe,#00f2fe)', borderRadius:'15px', padding:'15px 20px', color:'white', textAlign:'center', minWidth:'120px'}}>
+        <div style={{fontSize:'30px'}}>🚀</div>
+        <div style={{fontWeight:'bold', fontSize:'13px'}}>Dev Rockstar</div>
+      </div>
+    )}
+
+    {weakSubjects.length === 0 && (
+      <div style={{background:'linear-gradient(135deg,#43e97b,#38f9d7)', borderRadius:'15px', padding:'15px 20px', color:'white', textAlign:'center', minWidth:'120px'}}>
+        <div style={{fontSize:'30px'}}>⭐</div>
+        <div style={{fontWeight:'bold', fontSize:'13px'}}>All Rounder</div>
+      </div>
+    )}
+
+    {skills.communication >= 4 && (
+      <div style={{background:'linear-gradient(135deg,#fa709a,#fee140)', borderRadius:'15px', padding:'15px 20px', color:'white', textAlign:'center', minWidth:'120px'}}>
+        <div style={{fontSize:'30px'}}>🗣️</div>
+        <div style={{fontWeight:'bold', fontSize:'13px'}}>Communicator</div>
+      </div>
+    )}
+
+  </div>
+  {overallScore < 55 && weakSubjects.length > 2 && (
+    <div style={{marginTop:'15px', padding:'12px', background:'#fff5f5', borderRadius:'10px', color:'#ef4444'}}>
+      💪 Keep working hard — badges are waiting for you! Every expert was once a beginner!
+    </div>
+  )}
+</div>
+
+{/* Course Recommendations */}
+<div style={{background:'white', borderRadius:'15px', padding:'25px', marginBottom:'20px', boxShadow:'0 4px 15px rgba(0,0,0,0.1)'}}>
+  <h2 style={{color:'#333', marginBottom:'20px'}}>📚 Course Recommendations</h2>
+  {weakSubjects.map((s, i) => (
+    <div key={i} style={{marginBottom:'20px', padding:'15px', background:'#f8f9fa', borderRadius:'10px'}}>
+      <h3 style={{color:'#667eea', marginBottom:'10px'}}>📖 {s.subject} Resources</h3>
+      {s.subject === 'Maths' && (
+        <div>
+          <a href="https://www.khanacademy.org/math" target="_blank" style={{display:'block', color:'#764ba2', marginBottom:'8px', textDecoration:'none'}}>🎥 Khan Academy — Engineering Maths</a>
+          <a href="https://www.youtube.com/results?search_query=engineering+mathematics+lectures" target="_blank" style={{display:'block', color:'#764ba2', marginBottom:'8px', textDecoration:'none'}}>🎥 YouTube — Engineering Mathematics Lectures</a>
+          <a href="https://nptel.ac.in/courses/111/105/111105035/" target="_blank" style={{display:'block', color:'#764ba2', textDecoration:'none'}}>📘 NPTEL — Mathematics Course</a>
+        </div>
+      )}
+      {s.subject === 'Physics' && (
+        <div>
+          <a href="https://www.khanacademy.org/science/physics" target="_blank" style={{display:'block', color:'#764ba2', marginBottom:'8px', textDecoration:'none'}}>🎥 Khan Academy — Physics</a>
+          <a href="https://www.youtube.com/results?search_query=engineering+physics+lectures" target="_blank" style={{display:'block', color:'#764ba2', marginBottom:'8px', textDecoration:'none'}}>🎥 YouTube — Engineering Physics</a>
+          <a href="https://nptel.ac.in/courses/115/106/115106098/" target="_blank" style={{display:'block', color:'#764ba2', textDecoration:'none'}}>📘 NPTEL — Physics Course</a>
+        </div>
+      )}
+      {s.subject === 'Programming' && (
+        <div>
+          <a href="https://www.w3schools.com/c/" target="_blank" style={{display:'block', color:'#764ba2', marginBottom:'8px', textDecoration:'none'}}>🎥 W3Schools — C Programming</a>
+          <a href="https://www.youtube.com/results?search_query=c+programming+for+beginners" target="_blank" style={{display:'block', color:'#764ba2', marginBottom:'8px', textDecoration:'none'}}>🎥 YouTube — C Programming Tutorials</a>
+          <a href="https://www.hackerrank.com/domains/c" target="_blank" style={{display:'block', color:'#764ba2', textDecoration:'none'}}>💻 HackerRank — Practice Problems</a>
+        </div>
+      )}
+      {s.subject === 'DBMS' && (
+        <div>
+          <a href="https://www.geeksforgeeks.org/dbms/" target="_blank" style={{display:'block', color:'#764ba2', marginBottom:'8px', textDecoration:'none'}}>📘 GeeksForGeeks — DBMS Complete Guide</a>
+          <a href="https://www.youtube.com/results?search_query=dbms+lectures+for+beginners" target="_blank" style={{display:'block', color:'#764ba2', marginBottom:'8px', textDecoration:'none'}}>🎥 YouTube — DBMS Lectures</a>
+          <a href="https://nptel.ac.in/courses/106/105/106105175/" target="_blank" style={{display:'block', color:'#764ba2', textDecoration:'none'}}>📘 NPTEL — Database Management</a>
+        </div>
+      )}
+      {s.subject === 'Networking' && (
+        <div>
+          <a href="https://www.geeksforgeeks.org/computer-network-tutorials/" target="_blank" style={{display:'block', color:'#764ba2', marginBottom:'8px', textDecoration:'none'}}>📘 GeeksForGeeks — Computer Networks</a>
+          <a href="https://www.youtube.com/results?search_query=computer+networks+lectures" target="_blank" style={{display:'block', color:'#764ba2', marginBottom:'8px', textDecoration:'none'}}>🎥 YouTube — Networking Lectures</a>
+          <a href="https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/entry/ccna.html" target="_blank" style={{display:'block', color:'#764ba2', textDecoration:'none'}}>🏆 Cisco CCNA — Networking Certification</a>
+        </div>
+      )}
+    </div>
+  ))}
+  {weakSubjects.length === 0 && (
+    <p style={{color:'#22c55e', fontWeight:'bold'}}>🌟 Great job! No weak subjects. Keep maintaining your performance!</p>
+  )}
+</div>
         {/* Recommendations */}
         <div style={{background:'white', borderRadius:'15px', padding:'25px', marginBottom:'20px', boxShadow:'0 4px 15px rgba(0,0,0,0.1)'}}>
           <h2 style={{color:'#333', marginBottom:'15px'}}>💡 AI Recommendations</h2>
@@ -187,6 +303,70 @@ export default function Report() {
             </div>
           ))}
         </div>
+
+{/* Study Plan */}
+<div style={{background:'white', borderRadius:'15px', padding:'25px', marginBottom:'20px', boxShadow:'0 4px 15px rgba(0,0,0,0.1)'}}>
+  <h2 style={{color:'#333', marginBottom:'20px'}}>🎯 Personalized Study Plan</h2>
+  <p style={{color:'#666', marginBottom:'15px'}}>Based on your performance, here is your recommended daily study plan:</p>
+  
+  {weakSubjects.map((s, i) => (
+    <div key={i} style={{display:'flex', alignItems:'center', padding:'12px 15px', marginBottom:'10px', background:'#f0f4ff', borderRadius:'10px', borderLeft:'4px solid #667eea'}}>
+      <span style={{fontSize:'24px', marginRight:'15px'}}>
+        {s.subject === 'Maths' ? '📐' : s.subject === 'Physics' ? '⚡' : s.subject === 'Programming' ? '💻' : s.subject === 'DBMS' ? '🗄️' : '🌐'}
+      </span>
+      <div>
+        <div style={{fontWeight:'bold', color:'#333'}}>{s.subject}</div>
+        <div style={{color:'#666', fontSize:'14px'}}>
+          Study {s.score < 50 ? '2 hours' : '1 hour'} daily — 
+          {s.subject === 'Programming' ? ' Practice coding problems on HackerRank' :
+           s.subject === 'Maths' ? ' Solve 10 problems from previous papers' :
+           s.subject === 'DBMS' ? ' Revise normalization and SQL queries' :
+           s.subject === 'Physics' ? ' Review formulas and solve numericals' :
+           ' Study network protocols and OSI model'}
+        </div>
+      </div>
+    </div>
+  ))}
+
+  {weakSkills.map((s, i) => (
+    <div key={i} style={{display:'flex', alignItems:'center', padding:'12px 15px', marginBottom:'10px', background:'#f5f0ff', borderRadius:'10px', borderLeft:'4px solid #764ba2'}}>
+      <span style={{fontSize:'24px', marginRight:'15px'}}>⭐</span>
+      <div>
+        <div style={{fontWeight:'bold', color:'#333'}}>{s.skill} Skills</div>
+        <div style={{color:'#666', fontSize:'14px'}}>
+          {s.skill === 'Problem Solving' ? 'Solve 3 logical puzzles daily on LeetCode' :
+           s.skill === 'Communication' ? 'Practice speaking for 20 minutes daily' :
+           s.skill === 'Teamwork' ? 'Participate in group projects and discussions' :
+           s.skill === 'Coding' ? 'Code for at least 1 hour daily on any platform' :
+           'Analyze 1 case study or dataset daily'}
+        </div>
+      </div>
+    </div>
+  ))}
+
+  {attendanceLow && (
+    <div style={{display:'flex', alignItems:'center', padding:'12px 15px', marginBottom:'10px', background:'#fff5f5', borderRadius:'10px', borderLeft:'4px solid #ef4444'}}>
+      <span style={{fontSize:'24px', marginRight:'15px'}}>📅</span>
+      <div>
+        <div style={{fontWeight:'bold', color:'#333'}}>Attendance</div>
+        <div style={{color:'#666', fontSize:'14px'}}>Attend ALL classes this week — missing even one more could be critical!</div>
+      </div>
+    </div>
+  )}
+
+  {weakSubjects.length === 0 && weakSkills.length === 0 && !attendanceLow && (
+    <div style={{padding:'20px', textAlign:'center', color:'#22c55e', fontWeight:'bold'}}>
+      🌟 You are on track! Maintain your current study schedule and keep improving!
+    </div>
+  )}
+
+  <div style={{marginTop:'20px', padding:'15px', background:'#fffbeb', borderRadius:'10px', borderLeft:'4px solid #f59e0b'}}>
+    <strong>⏰ Daily Schedule Tip:</strong>
+    <p style={{color:'#666', margin:'5px 0 0 0', fontSize:'14px'}}>
+      Morning: Revise weak subjects (2 hrs) → Afternoon: Practice problems (1 hr) → Evening: Watch video lectures (1 hr)
+    </p>
+  </div>
+</div>
 
        {/* Buttons */}
 <div style={{display:'flex', gap:'15px'}}>
